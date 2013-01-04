@@ -2,7 +2,7 @@ _V_.options.components['ga'] = {};
 
 _V_.Ga = _V_.Component.extend({
 
-  init: function (player, options) {
+	init: function (player, options) {
 		this._super(player, options);
 		this.initGa();
 	},
@@ -36,7 +36,8 @@ _V_.Ga = _V_.Component.extend({
 		if(!options.ga.hasOwnProperty("debug"))
 			options.ga.debug = false;
 		
-		//this.progressPing = {};
+		// keeps track of logged progress milestones, as progress is tracked by rounding the currentTime() and several currentTime() values can round to the same value
+		this.progressPing = {};
 		
 		this.originalSrc = this.player.currentSrc();
 		
@@ -74,14 +75,12 @@ _V_.Ga = _V_.Component.extend({
 		return Math.round(this.player.volume() * 100);
 	},
 	
-	/*
 	clearProgressPingAhead : function(){
 		this.player.removeEvent('play',_V_.proxy(this,this.clearProgressPingAhead));
 		var i = this.player.options.ga.logInterval;
 		for(var x = this.duration() - this.duration() % i; x >= this.currentTime(); x -= i)
 			delete this.progressPing[x.toString()];
 	},
-	*/
 	
 	shouldLogSrc : function(){
 		return !this.player.options.ga.onlyLogOriginalSrc || this.originalSrc == this.player.currentSrc();
@@ -133,10 +132,10 @@ _V_.Ga = _V_.Component.extend({
 		if(	(this.currentTime() > 0) && // not the beginning
 			(this.currentTime() != this.duration()) && // not the end
 			(this.currentTime() % this.player.options.ga.logInterval == 0) && // intersecting a log interval
-			//(!this.progressPing[this.currentTime().toString()]) && // haven't already logged the interval
+			(!this.progressPing[this.currentTime().toString()]) && // haven't already logged the interval
 			this.shouldLogSrc() // check if should log non-original source and check if sources match if not
 			){
-			//this.progressPing[this.currentTime().toString()] = true;
+			this.progressPing[this.currentTime().toString()] = true;
 			this.logEvent("Progress",this.currentTime(),true);
 		}
 	},
@@ -153,7 +152,7 @@ _V_.Ga = _V_.Component.extend({
 		this.player.removeEvent('seeked',_V_.proxy(this,this.onSeek));
 		this.player.addEvent('timeupdate',_V_.proxy(this,this.onTimeUpdate));
 		this.player.addEvent('seeking',_V_.proxy(this,this.onSeeking));
-		//this.player.addEvent('play',_V_.proxy(this,this.clearProgressPingAhead));
+		this.player.addEvent('play',_V_.proxy(this,this.clearProgressPingAhead));
 		//this.player.addEvent('play',_V_.proxy(this,this.logSeek));
 	},
 	
