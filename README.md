@@ -12,7 +12,7 @@ Include the plugin after including the main video.js file:
 
 Minimal setup:
 ```javascript
-_V_("VideoElement",{
+_V_("{{video_element_id}}",{
   // other options and plugins here
   "ga": {}
 });
@@ -20,7 +20,7 @@ _V_("VideoElement",{
 
 Advanced setup:
 ```javascript
-_V_("VideoElement",{
+_V_("{{video_element_id}}",{
   // other options here
   "ga": {
     "category":"Video" // optional, category to use for Google Analytics Events, defaults to 'Video'
