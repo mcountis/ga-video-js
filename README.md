@@ -10,6 +10,13 @@ Include the plugin after including the main video.js file:
 <script type="text/javascript" src="/js/video-js/ga.plugin.js"></script>
 ```
 
+Event Actions
+=============
+* Play - block by adding key 'play' to `ga.options.holdEvent` with some truthy value.
+* Pause - block by adding key 'pause' to `ga.options.holdEvent` with some truthy value.
+* Finish - block by adding key 'ended' to `ga.options.holdEvent` with some truthy value.
+* Progress - block by adding key 'timeupdate' to `ga.options.holdEvent` with some truthy value.
+
 Minimal setup:
 ```javascript
 _V_("{{video_element_id}}",{
@@ -26,11 +33,11 @@ _V_("{{video_element_id}}",{
     "category": "Video" // optional, category to use for Google Analytics Events, defaults to 'Video'
     ,"label": "{{unique_identifier_per_video}}" // optional, defaults to player.currentSrc()
     ,"queue": '_gaq' // optional, string that refers to google analytics queue array in window scope, defaults to '_gaq'
-    ,"logInterval": 15 // optional, defaults to 15 seconds
+    ,"logInterval": 15 // optional, used to log 'Progress' events, defaults to 15 seconds
     ,"volumeScale": 100 // optional, for volume change events, factor to normalize volume (as volume is stored as a float between 0.0 and 1.0), defaults to 100
     ,"onlyLogOriginalSrc": true // optional, will restrict logging to only apply to the original source of the video element in case the source is being changed (ads), defaults to true
     ,"debug": false // optional, when set to true will send all log reqeusts to _V_.log, which should go to window.console.log, defaults to false
-    ,"holdEvent": {"volumechange":true} // optional, hash that will block events from being logged to GA.
+    ,"holdEvent": {"progress":true} // optional, hash that will block events from being logged to GA.
   }
 });
 ```
