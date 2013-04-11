@@ -1,5 +1,4 @@
-ga-video-js
-===========
+# ga-video-js
 
 google analytics plugin for [video.js](https://github.com/zencoder/video-js)
 
@@ -10,14 +9,16 @@ Include the plugin after including the main video.js file:
 <script type="text/javascript" src="/js/video-js/ga.plugin.js"></script>
 ```
 
-Event Actions
-=============
+## Event Actions
+
 * Play - block by adding key 'play' to `ga.options.holdEvent` with some truthy value.
 * Pause - block by adding key 'pause' to `ga.options.holdEvent` with some truthy value.
 * Finish - block by adding key 'ended' to `ga.options.holdEvent` with some truthy value.
 * Progress - block by adding key 'timeupdate' to `ga.options.holdEvent` with some truthy value.
 
-Minimal setup:
+## Setup
+
+### Minimal setup
 ```javascript
 _V_("{{video_element_id}}",{
   // other options and plugins here
@@ -25,7 +26,7 @@ _V_("{{video_element_id}}",{
 });
 ```
 
-Advanced setup:
+### Advanced setup
 ```javascript
 _V_("{{video_element_id}}",{
   // other options here
